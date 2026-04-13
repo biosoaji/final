@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: FinalProject
+  navbar:
+    left:
+      - href: index.qmd
+        text: ProjectHome
+      - href: introduction.qmd
+        text: Introduction
+      - href: methods.qmd
+        text: Methods
+      - href: results.qmd
+        text: Results
+      - href: conclusion.qmd
+        text: Conclusion and Summary  
+      - href: aboutdata.qmd
+        text: About the Data
+  page-footer: 
+    left: |
+      University of Michigan <br>
+      Department of Biostatistics
+    right: |
+      LICENSE <br>
+      View the [source at GitHub](https://github.com/biosoaji/BIOSTAT620W26).
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true

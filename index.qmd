@@ -1,0 +1,39 @@
+---
+title: Cognitive Health in the U.S.
+image: AD_image.jpeg
+toc: false
+about: 
+  template: jolla
+  image-shape: round
+  image-width: 17em
+  links:
+    - text: LinkedIn
+      href: https://www.linkedin.com/in/minyoungso/
+    - text: GitHub
+      href: https://github.com/biosoaji
+    - text: Email
+      href: mailto:sominy@umich.edu
+---
+
+::: {style="font-size: 150%;"}
+**An Ecological Study**\
+**of**\
+**Prevalence of Alzheimer’s Dementia and Its Potential Risk Factors**
+:::
+
+::: {style="font-size: 125%;"}
+BIOS 620 Final Project
+:::
+\
+\
+\
+
+::: {style="font-size: 150%;"}
+**Minyoung So**
+:::
+
+::: {style="font-size: 135%;"}
+**Department of Biostatistics**
+
+**Universtity of Michigan**
+:::

@@ -1,0 +1,8 @@
+AD_Aging
+AD + health aging
+id, clinicalStage, type, drugs, trialOfficialTitle, disease, trialStopReasonCategories, trialPhase, trialWhyStopped, trialStartDate
+
+start year=\end year 
+data_value_footnote_symbol
+data_value_footnote
+
