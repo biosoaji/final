@@ -4,13 +4,9 @@ title: Methods
 
 This study employed an ecological design integrating multiple publicly available datasets, including county-level Alzheimer’s dementia (AD) prevalence, state-level Behavioral Risk Factor Surveillance System (BRFSS) survey data, and U.S. Census demographic and socioeconomic data. Data were acquired through direct download (CSV) and API-based retrieval with pagination to ensure completeness. All datasets were cleaned and aligned using standardized geographic identifiers (county/state names and GEOID), and variables were transformed into analyzable formats.
 
-County-level AD prevalence was aggregated to the state level using a population-weighted mean to account for differences in the size of the elderly population:
+County-level senior population (aged ≥65 years) was extracted from the AD prevalence dataset and used to derive both population density and the proportion of older adults at the county level.
 
-$$
-\text{State Prevalence} = \frac{\sum_{i} p_i \cdot n_i}{\sum_{i} n_i}
-$$
-
-where $p_i$ represents the prevalence in county $i$ and $n_i$ denotes the population aged ≥65 years in county $i$.
+---
 
 Population density was calculated to assess spatial distribution effects using land area:
 
@@ -23,6 +19,15 @@ and, where appropriate, log-transformed for visualization:
 $$
 \text{Log Density} = \log(\text{Population Density})
 $$
+
+
+The percentage of the senior population was calculated to assess the relative aging structure of each county:
+
+$$
+\text{Senior Percentage (\%)} = \frac{N_{65+}}{N_{\text{total}}} \times 100
+$$
+
+---
 
 Socioeconomic status was quantified using the proportion of households receiving Supplemental Nutrition Assistance Program (SNAP) benefits:
 
@@ -37,6 +42,8 @@ R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
 $$
 
 where $y_i$ represents observed AD prevalence and $\hat{y}_i$ represents predicted values from the fitted model.
+
+---
 
 Subjective cognitive decline (SCD) was analyzed using aggregated BRFSS responses restricted to overall stratifications to minimize missingness and ensure comparability. Descriptive and comparative analyses were conducted across states and over time (2015–2022), and spatial patterns were visualized using county-level maps.
 

@@ -29,7 +29,7 @@ Environmental factors were not formally assessed in this study; however, visual 
 
 The relationship between altitude and Alzheimer’s disease may be complex, involving both physiological stressors and long-term adaptation mechanisms. While this study does not establish a direct link, the observed spatial similarity warrants further investigation using appropriate environmental and epidemiological data.
 
-In summary, future studies integrating environmental, socioeconomic, and biological factors may provide a more comprehensive understanding of regional variation in Alzheimer’s disease risk.
+In summary, future studies integrating socioeconomic, geographic and biological factors may provide a more comprehensive understanding of regional variation in Alzheimer’s disease risk.
 
 ![Prevalence of Alzheimer’s dementia among adults aged ≥65 years across U.S. states and counties (2020). Source: Dhana et al., Alzheimer’s & Dementia, 2023.](prevalenceAD.jpeg)
 

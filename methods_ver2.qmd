@@ -1,0 +1,72 @@
+---
+title: "About"
+---
+
+## Methods
+
+This study employed an ecological design integrating multiple publicly available datasets, including county-level Alzheimer’s dementia (AD) prevalence, state-level Behavioral Risk Factor Surveillance System (BRFSS) survey data, and U.S. Census demographic and socioeconomic data. Data were acquired through direct download (CSV) and API-based retrieval with pagination to ensure completeness. All datasets were cleaned and aligned using standardized geographic identifiers (county/state names and GEOID), and variables were transformed into analyzable formats.
+
+County-level AD prevalence was aggregated to the state level using a population-weighted mean to account for differences in the size of the elderly population:
+
+$$
+\text{State Prevalence} = \frac{\sum_{i} p_i \cdot n_i}{\sum_{i} n_i}
+$$
+
+where $p_i$ represents the prevalence in county $i$ and $n_i$ denotes the population aged ≥65 years in county $i$.
+
+Population density was calculated to assess spatial distribution effects using land area:
+
+$$
+\text{Population Density} = \frac{\text{Population}}{\text{Land Area (m}^2\text{)}}
+$$
+
+and, where appropriate, log-transformed for visualization:
+
+$$
+\text{Log Density} = \log(\text{Population Density})
+$$
+
+Socioeconomic status was quantified using the proportion of households receiving Supplemental Nutrition Assistance Program (SNAP) benefits:
+
+$$
+\text{SNAP Proportion} = \frac{\text{Households Receiving SNAP}}{\text{Total Households}}
+$$
+
+The association between AD prevalence and socioeconomic factors was assessed using a simple linear model, summarized by the coefficient of determination:
+
+$$
+R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
+$$
+
+where $y_i$ represents observed AD prevalence and $\hat{y}_i$ represents predicted values from the fitted model.
+
+Subjective cognitive decline (SCD) was analyzed using aggregated BRFSS responses restricted to overall stratifications to minimize missingness and ensure comparability. Descriptive and comparative analyses were conducted across states and over time (2015–2022), and spatial patterns were visualized using county-level maps.
+
+All analyses and visualizations were conducted in R using packages including *dplyr*, *ggplot2*, *plotly*, and *kableExtra*, ensuring reproducibility and consistency across datasets.
+
+
+
+
+# Method
+
+cognitive decline module was chosen to be compared with prevalence of AD. The module in this dataset has 4 topics about self-reported cognitive decline and each topic has one question. A detailed description of the questions is provided in the Result page.
+
+By using Dataset name
+
+$$State Prevalence=\frac{\sum_{i} (p_i \times n_i)}{\sum_{i} n_i}$$
+
+Where: $p_i$: prevalence in county $i$ $N_i$: population aged ≥65 in county $i$
+
+## Methods
+
+This study integrates county-level Alzheimer’s dementia prevalence data with state-level survey data and U.S. Census demographic data to investigate geographic and socioeconomic patterns associated with cognitive health in the United States. The primary outcome, Alzheimer’s dementia prevalence, was obtained at the county level and aggregated to the state level using a population-weighted mean:
+
+$$
+\text{State Prevalence} = \frac{\sum_{i} (p_i \times n_i)}{\sum_{i} n_i}
+$$
+
+where $p_i$ represents the prevalence in county $i$, and $n_i$ denotes the population aged 65 years and older in county $i$. This approach ensures that counties with larger elderly populations contribute proportionally to state-level estimates.
+
+Subjective cognitive decline (SCD) was assessed using the Cognitive Decline module from the Behavioral Risk Factor Surveillance System (BRFSS). Analyses were restricted to overall age-adjusted groups, and comparisons were made between high-prevalence states (Maryland, New York, Mississippi, and Florida) and national estimates. Additional county-level demographic and socioeconomic variables from the U.S. Census were incorporated to explore potential associations with Alzheimer’s dementia prevalence, including housing characteristics and SNAP participation.
+
+------------------------------------------------------------------------

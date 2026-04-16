@@ -13,7 +13,7 @@ This page provides a detailed description of the datasets used in this study, al
 This dataset originates from the Chicago Health and Aging Project (CHAP), a prospective population-based cohort study designed to evaluate risk factors for Alzheimer’s dementia (AD). Prevalence estimates were derived using neurocognitive assessments and demographic data collected from 10,802 participants through structured in-home interviews conducted in 3-year cycles.
 
   - **Neurocognitive tests:**  
-Two episodic memory tests, one perceptual speed test, and the Mini-Mental State Examination (MMSE) assessing general orientation and global cognition.
+Two episodic memory tests, one perceptual speed test, and the Mini-Mental State Examination (MMSE) assessing general orientation and global cognition; 36,408 cognitive assessments between 1993 and 2012 (10,340 participant with 65+).
 
   - **Demographic data:**  
 Based on NHCS 2020 bridged-race population estimates.

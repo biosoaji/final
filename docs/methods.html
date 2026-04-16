@@ -182,11 +182,8 @@ window.Quarto = {
 
 
 <p>This study employed an ecological design integrating multiple publicly available datasets, including county-level Alzheimer’s dementia (AD) prevalence, state-level Behavioral Risk Factor Surveillance System (BRFSS) survey data, and U.S. Census demographic and socioeconomic data. Data were acquired through direct download (CSV) and API-based retrieval with pagination to ensure completeness. All datasets were cleaned and aligned using standardized geographic identifiers (county/state names and GEOID), and variables were transformed into analyzable formats.</p>
-<p>County-level AD prevalence was aggregated to the state level using a population-weighted mean to account for differences in the size of the elderly population:</p>
-<p><span class="math display">\[
-\text{State Prevalence} = \frac{\sum_{i} p_i \cdot n_i}{\sum_{i} n_i}
-\]</span></p>
-<p>where <span class="math inline">\(p_i\)</span> represents the prevalence in county <span class="math inline">\(i\)</span> and <span class="math inline">\(n_i\)</span> denotes the population aged ≥65 years in county <span class="math inline">\(i\)</span>.</p>
+<p>County-level senior population (aged ≥65 years) was extracted from the AD prevalence dataset and used to derive both population density and the proportion of older adults at the county level.</p>
+<hr>
 <p>Population density was calculated to assess spatial distribution effects using land area:</p>
 <p><span class="math display">\[
 \text{Population Density} = \frac{\text{Population}}{\text{Land Area (m}^2\text{)}}
@@ -195,6 +192,11 @@ window.Quarto = {
 <p><span class="math display">\[
 \text{Log Density} = \log(\text{Population Density})
 \]</span></p>
+<p>The percentage of the senior population was calculated to assess the relative aging structure of each county:</p>
+<p><span class="math display">\[
+\text{Senior Percentage (\%)} = \frac{N_{65+}}{N_{\text{total}}} \times 100
+\]</span></p>
+<hr>
 <p>Socioeconomic status was quantified using the proportion of households receiving Supplemental Nutrition Assistance Program (SNAP) benefits:</p>
 <p><span class="math display">\[
 \text{SNAP Proportion} = \frac{\text{Households Receiving SNAP}}{\text{Total Households}}
@@ -204,6 +206,7 @@ window.Quarto = {
 R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
 \]</span></p>
 <p>where <span class="math inline">\(y_i\)</span> represents observed AD prevalence and <span class="math inline">\(\hat{y}_i\)</span> represents predicted values from the fitted model.</p>
+<hr>
 <p>Subjective cognitive decline (SCD) was analyzed using aggregated BRFSS responses restricted to overall stratifications to minimize missingness and ensure comparability. Descriptive and comparative analyses were conducted across states and over time (2015–2022), and spatial patterns were visualized using county-level maps.</p>
 <p>All analyses and visualizations were conducted in R using packages including <em>dplyr</em>, <em>ggplot2</em>, <em>plotly</em>, and <em>kableExtra</em>, ensuring reproducibility and consistency across datasets.</p>
 

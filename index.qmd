@@ -22,7 +22,7 @@ about:
 :::
 
 ::: {style="font-size: 125%;"}
-BIOS 620 Final Project
+**BIOS 620 Final Project**
 :::
 \
 \

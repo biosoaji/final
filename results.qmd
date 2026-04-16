@@ -112,7 +112,13 @@ This study focuses on the Cognitive Decline module, which includes measures of s
 
 The module contains four key questions:
 
-Q30: Frequency of subjective cognitive decline Q31: Impact on daily activities Q41: Need for assistance Q42: Experience seeking medical help
+-   Q30: Frequency of subjective cognitive decline
+
+-   Q31: Impact on daily activities
+
+-   Q41: Need for assistance
+
+-   Q42: Experience seeking medical help
 
 A detailed mapping of these questions is provided in Table 3.
 
@@ -183,10 +189,10 @@ ggplot(na_by_question,
   coord_flip() +
   scale_y_continuous(limits = c(0, 1)) +      # proportion scale
   labs(
-    title = "Proportion of Missing Data by Survey Question",
+    title = "Figure 1: Proportion of Missing Data by Survey Question",
     x = "Question ID",
-    y = "Proportion of Missing Values",
-    caption = "Figure 1: Proportion of Missing Data by Survey Question in Cognitive Decline Module"
+    y = "Proportion of Missing Values"
+#    caption = "Figure 1: Proportion of Missing Data by Survey Question in Cognitive Decline Module"
   ) +
   geom_text(aes(label = scales::percent(na_rate, accuracy = 1)),
           hjust = -0.1, size = 3.5)+
@@ -262,7 +268,7 @@ na_summary_table %>%
 
 ```
 
-## 2. State-Level Analysis
+## 2. State-Level Analysis of AD Prevalence
 
 ### 2.1. SCD Comparison of High AD Prevalence States to the U.S. National Level (2015–2022)
 
@@ -271,10 +277,6 @@ To assess whether states with the highest Alzheimer’s dementia (AD) prevalence
 In the jitter plot (Figure 2), these four states were highlighted against the distribution of all states (gray), with the U.S. national aggregate shown in black as a reference. Maryland consistently exhibited lower SCD-related response frequencies than the national average, whereas Mississippi showed higher values across multiple indicators. This suggests that older adults in Mississippi may report greater awareness of cognitive decline and a higher need for assistance, aligning with its elevated AD prevalence. In contrast, Maryland demonstrated an inverse pattern, with lower SCD reporting despite high AD prevalence. Florida and New York showed values similar to the national distribution, indicating no distinct deviation in SCD-related measures.
 
 ```{r, fig.width=9, fig.height=5, out.width="100%", echo=FALSE, warning=FALSE, message=FALSE}
-
-library(dplyr)
-library(ggplot2)
-library(plotly)
 
 # 1. Prepare Data
 summary_lookup <- tibble::tribble(
@@ -337,15 +339,15 @@ p <- ggplot(plot_data, aes(x = data_value, y = summary,
   scale_color_manual(values = pub_palette) +
   scale_y_discrete(limits = rev) +
   labs(
-    title = "Subjective Cognitive Decline Survey Responses",
-    subtitle = "Highlighting states with high modeled Alzheimer's prevalence vs. the National Average",
+    title = "Figure 2: Subjective Cognitive Decline Survey Responses",
+  #  subtitle = "Highlighting states with high modeled Alzheimer's prevalence vs. the National Average",
     x = "Percentage of Respondents (%)",
     y = NULL,
     color = "Region"
   ) +
   theme_minimal(base_size = 12) + # Slightly smaller base font so things fit better
   theme(
-    plot.title = element_text(face = "bold", size = 14),
+    plot.title = element_text(face = "bold", size = 12, xanchor = "left"),
     plot.subtitle = element_text(color = "gray40", margin = margin(b = 10)),
     panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
     panel.grid.minor = element_blank()
@@ -356,7 +358,7 @@ interactive_plot <- ggplotly(p, tooltip = "text") %>%
   layout(
     autosize = TRUE,
     # Keep the legend horizontal, tightly packed under the x-axis
-    legend = list(orientation = "h", x = 0.5, xanchor = "center", y = -0.25),
+    legend = list(orientation = "h", x = 0.5, xanchor = "center", y = -0.3),
     # Tighter margins so the graph doesn't artificially expand
     margin = list(t = 40, b = 80, l = 10, r = 10)
   ) %>%
@@ -431,7 +433,7 @@ ggplot(plot_trend_data, aes(x = yearend, y = data_value, group = state)) +
   facet_wrap(~summary, scales = "free_y", ncol = 2) +
   
   labs(
-    title = "Longitudinal Trends in Subjective Cognitive Decline (2015–2022)",
+    title = "Figure 3: Longitudinal Trends in Subjective Cognitive Decline (2015–2022)",
     subtitle = "Comparing high AD-prevalence states against the national distribution",
     x = "Survey Year",
     y = "Percentage of Respondents (%)",
@@ -457,7 +459,7 @@ ggplot(plot_trend_data, aes(x = yearend, y = data_value, group = state)) +
 
 ### 2.3. Covid19 Motality Comparision
 
-To estimate the condition of health environment of the high AD prevalence states (highlighted by \*), I mapped the COVID19 mortality rates on the national map. Although the causes of high mortality late will vary such as vaccination uptake, public health policies, the demorgraphuc and heath factors such as obeity rates and age, we cannot deny it can be a good indicator total health care environment. However, the four states COVID19 death rates were very representing their different healthcare environment.
+To estimate the condition of health environment of the high AD prevalence states (highlighted by \*), I mapped the COVID19 mortality rates on the national map. Although the causes of high mortality late will vary such as vaccination uptake, public health policies, the demographic and heath factors such as obeity rates and age, we cannot deny it can be a good indicator total health care environment. However, the four states COVID19 death rates were very representing their different healthcare environment.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -531,7 +533,8 @@ p <- ggplot(map_data_covid, aes(long, lat, group = group)) +
   
   coord_fixed(1.3) +
   labs(title = "Figure 4: US COVID-19 Death Rates (2020)") +
-  theme_void()
+  theme_void() +
+  theme(plot.title = element_text(face = "bold"))
 
 # Convert to interactive plot
 ggplotly(p, tooltip = "text")
@@ -586,7 +589,7 @@ star_data <- data.frame(
   filter(state %in% c("maryland", "new york", "mississippi", "florida"))
 
 # Plot
-ggplot(county_map_data, aes(long, lat, group = group)) +
+p0<-ggplot(county_map_data, aes(long, lat, group = group)) +
   geom_polygon(aes(fill = prevalence), color = NA) +
 
   
@@ -605,7 +608,9 @@ ggplot(county_map_data, aes(long, lat, group = group)) +
   
   coord_fixed(1.3) +
   labs(title = "Figure 5: Alzheimer’s Disease Prevalence (County-Level, Age ≥65)") +
-  theme_void()
+  theme_void() +
+  theme(plot.title = element_text(face = "bold"))
+p0
 ```
 
 ### 3.1. Population effect
@@ -720,7 +725,8 @@ p1 <- ggplot(map_data_clean, aes(long, lat, group = group)) +
             inherit.aes = FALSE) +
   coord_fixed(1.3) +
   labs(title = "Figure 6a: US Total Population (2020)") +
-  theme_void()
+  theme_void() +
+  theme(plot.title = element_text(face = "bold"))
 
 p1
 
@@ -742,7 +748,8 @@ p2 <- ggplot(map_data_clean, aes(long, lat, group = group)) +
             inherit.aes = FALSE) +
   coord_fixed(1.3) +
   labs(title = "Figure 6b: US Total Population Density (2020)") +
-  theme_void()
+  theme_void() +
+  theme(plot.title = element_text(face = "bold"))
 
 p2
 ```
@@ -843,7 +850,7 @@ star_locs <- data.frame(
 # ---------------------------------------------------------
 
 # (a) Senior Population Map (Total Count)
-p1 <- ggplot(map_data_all, aes(long, lat, group = group)) +
+ps1 <- ggplot(map_data_all, aes(long, lat, group = group)) +
   geom_polygon(aes(fill = senior_pop), color = NA) +
   scale_fill_gradient(
     trans = "log10", 
@@ -854,10 +861,11 @@ p1 <- ggplot(map_data_all, aes(long, lat, group = group)) +
             color = "yellow", size = 7, inherit.aes = FALSE) +
   coord_fixed(1.3) +
   labs(title = "Figure 7a: Total Senior Population (65+)") +
-  theme_void() + theme(legend.position = "bottom")
+  theme_void() + theme(legend.position = "bottom")+
+  theme(plot.title = element_text(face = "bold"))
 
 # (b) Senior Population Density Map (km²)
-p2 <- ggplot(map_data_all, aes(long, lat, group = group)) +
+ps2 <- ggplot(map_data_all, aes(long, lat, group = group)) +
   # FIX: geom_polygon was missing here!
   geom_polygon(aes(fill = senior_density), color = NA) + 
   scale_fill_gradient(
@@ -868,11 +876,12 @@ p2 <- ggplot(map_data_all, aes(long, lat, group = group)) +
   geom_text(data = star_locs, aes(x = long, y = lat, label = "*"),
             color = "yellow", size = 7, inherit.aes = FALSE) +
   coord_fixed(1.3) +
-  labs(title = "Figure 7b Senior Population Density (65+)") +
-  theme_void() + theme(legend.position = "bottom")
+  labs(title = "Figure 7b: Senior Population Density (65+)") +
+  theme_void() + theme(legend.position = "bottom")+
+  theme(plot.title = element_text(face = "bold"))
 
 # (c) % of Senior Population Map
-p3 <- ggplot(map_data_all, aes(long, lat, group = group)) +
+ps3 <- ggplot(map_data_all, aes(long, lat, group = group)) +
   geom_polygon(aes(fill = pct_senior), color = NA) +
   scale_fill_gradient(
     low = "#fff7bc", high = "#d95f0e", 
@@ -881,218 +890,17 @@ p3 <- ggplot(map_data_all, aes(long, lat, group = group)) +
   geom_text(data = star_locs, aes(x = long, y = lat, label = "*"),
             color = "yellow", size = 7, inherit.aes = FALSE) +
   coord_fixed(1.3) +
-  labs(title = "Figure 7c Percentage of Senior Population (65+)") +
-  theme_void() + theme(legend.position = "bottom")
-
-p1
-p2
-p3
-
-```
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-
-# DATA CLEANING: Senior Population & Percentages
-
-pop_raw <- read_csv("seniorpop5Y2020.csv", show_col_types = FALSE)
-
-pop_clean <- pop_raw %>%
-  slice(-1) %>%
-  select(
-    location = NAME,
-    total_pop = S0103_C01_001E,
-    senior_pop = S0103_C02_001E
-  ) %>%
-  mutate(
-    total_pop = as.numeric(total_pop),
-    senior_pop = as.numeric(senior_pop),
-    pct_senior = (senior_pop / total_pop) * 100,
-    location = str_trim(location)
-  ) %>%
-  drop_na(total_pop, senior_pop) %>%
-  separate(location, into = c("county", "state"), sep = ", ") %>%
-  mutate(
-    county = str_remove(county, " County| Parish| Borough| Census Area| Municipality"),
-    county_lower = tolower(county),
-    state_lower = tolower(state)
-  ) %>%
-  filter(state_lower != "district of columbia")
-
-# ---------------------------------------------------------
-# 2. LAND AREA & OUTLIER REMOVAL
-# ---------------------------------------------------------
-ntad_raw <- read_csv("NTAD_Counties.csv", show_col_types = FALSE)
-
-ntad_clean <- ntad_raw %>%
-  mutate(
-    county_lower = tolower(str_remove(NAME, " County| Parish| Borough")),
-    area_sq_km = ALAND / 1000000 # Convert to km²
-  ) %>%
-  select(county_lower, area_sq_km)
-
-senior_data_final <- pop_clean %>%
-  left_join(ntad_clean, by = "county_lower") %>%
-  mutate(senior_density = senior_pop / area_sq_km) %>%
-  distinct(state_lower, county_lower, .keep_all = TRUE)
-
-# --- IDENTIFY AND REMOVE THE OUTLIER ---
-# Find the county with the absolute highest density
-outlier_county <- senior_data_final %>%
-  arrange(desc(senior_density)) %>%
-  slice(1)
-
-# Print a message to the console so you know exactly what was removed
-cat("Removing outlier for better map coloring:", 
-    str_to_title(outlier_county$county), "County,", 
-    str_to_title(outlier_county$state), 
-    "( Density:", round(outlier_county$senior_density, 0), "seniors/km² )\n")
-
-# Filter that specific county out of the dataset
-senior_data_final <- senior_data_final %>%
-  filter(!(county_lower == outlier_county$county_lower & state_lower == outlier_county$state_lower))
-
-# ---------------------------------------------------------
-# 3. BASE MAP SETUP
-# ---------------------------------------------------------
-us_counties <- map_data("county") %>%
-  filter(region != "district of columbia")
-
-map_data_all <- us_counties %>%
-  left_join(senior_data_final,
-            by = c("subregion" = "county_lower",
-                   "region" = "state_lower"))
-
-star_locs <- data.frame(
-  state = c("Maryland", "New York", "Mississippi", "Florida"),
-  long = c(-76.64, -75.52, -89.39, -81.51),
-  lat = c(39.04, 43.29, 32.35, 27.66)
-)
-
-# ---------------------------------------------------------
-# 4. BUILD THE THREE MAPS
-# ---------------------------------------------------------
-
-# (a) Senior Population Map 
-p1 <- ggplot(map_data_all, aes(long, lat, group = group)) +
-  geom_polygon(aes(fill = senior_pop), color = NA) +
-  scale_fill_gradient(
-    low = "#f2e5ff", high = "#4b0082", 
-    name = "Seniors (Count)", na.value = "grey90"
-  ) +
- 
-  geom_text(data = star_locs,
-            aes(long, lat, label = "*"),
-            color = "yellow",
-            size = 6,
-            inherit.aes = FALSE) +
-  
-  coord_fixed(1.3) +
-  labs(title = "Figure 7a: Total Senior Population (65+) by County") +
-  theme_void() + 
-  theme(legend.position = "bottom")
-
-# (b) Senior Population Density Map (OUTLIER REMOVED + km²)
-# Cap extreme values (stronger than 99%)
-upper_limit <- quantile(map_data_all$senior_density, 0.95, na.rm = TRUE)
-
-map_data_all <- map_data_all %>%
-  mutate(senior_density_cap = pmin(senior_density, upper_limit))
-
-# (b) Senior Population Density Map (OUTLIER REMOVED + km²)
-p2 <- ggplot(map_data_all, aes(long, lat, group = group)) +
-  geom_polygon(aes(fill = senior_density), color = NA) +
-  scale_fill_gradient(
-    low = "#e5f5f9", high = "#006d2c", 
-    name = "Seniors / km²", na.value = "grey90"
-  ) +
-  geom_text(data = star_locs,
-            aes(long, lat, label = "*"),
-            color = "yellow",
-            size = 6,
-            inherit.aes = FALSE) +
-  coord_fixed(1.3) +
-  labs(title = "Figure 7b: Senior Population Density (Aged 65+)") +
-  theme_void() + 
-  theme(legend.position = "bottom")
-
-# (c) % of Senior Population Map
-p3 <- ggplot(map_data_all, aes(long, lat, group = group)) +
-  geom_polygon(aes(fill = pct_senior), color = NA) +
-  scale_fill_gradient(
-    low = "#fff7bc", high = "#d95f0e", 
-    name = "% Senior", na.value = "grey90"
-  ) +
-  geom_text(data = star_locs,
-            aes(long, lat, label = "*"),
-            color = "yellow",
-            size = 6,
-            inherit.aes = FALSE) +
-  coord_fixed(1.3) +
   labs(title = "Figure 7c: Percentage of Senior Population (65+)") +
-  theme_void() + 
-  theme(legend.position = "bottom")
+  theme_void() + theme(legend.position = "bottom")+
+  theme(plot.title = element_text(face = "bold"))
 
-print(p1)
-print(p2)
-print(p3)
+ps1
+ps2
+ps3
+
 ```
 
-------------------------------------------------------------------------
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-
-# Prepare Data
-missingness_check <- pop_raw %>%
-  slice(-1) %>%
-  select(
-    `Total Population` = S0103_C01_001E,
-    `Senior Population (65+)` = S0103_C02_001E
-  ) %>%
-  mutate(across(everything(), ~na_if(., "*****"))) %>%
-  mutate(across(everything(), as.numeric))
-
-# Total number of observations
-n_obs <- nrow(missingness_check)
-
-# Calculate Missingness
-na_summary_pop <- missingness_check %>%
-  summarise(across(everything(), list(
-    count = ~sum(is.na(.)),
-    pct = ~round(mean(is.na(.)) * 100, 2)
-  ))) %>%
-  
-  pivot_longer(
-    everything(),
-    names_to = c("Variable Name", ".value"),
-    names_pattern = "(.*)_(count|pct)"
-  ) %>%
-  
-  rename(`NA Count` = count, `Missing (%)` = pct) %>%
-  
-  # Add total observations
-  mutate(`Total N` = n_obs) %>%
-  
-  mutate(Status = case_when(
-    `Missing (%)` == 0 ~ "Complete",
-    `Missing (%)` < 5 ~ "High Integrity",
-    `Missing (%)` < 20 ~ "Conditional",
-    TRUE ~ "Limited Usage"
-  )) %>%
-  
-  select(`Variable Name`, `Total N`, `NA Count`, `Missing (%)`, Status)
-
-# 3. Render Table
-na_summary_pop %>%
-  kbl(caption = "Table 4: Completeness Summary for Census Population Variables") %>%
-  kable_styling(
-    bootstrap_options = c("striped", "hover", "condensed"),
-    full_width = FALSE
-  ) %>%
-  row_spec(0, bold = TRUE, background = "#f2f2f2") %>%
-  column_spec(4, bold = TRUE)
-```
-
-### 3.2. Economic Effect
+### 3.2. Socioeconomic Effect
 
 To evaluate socioeconomic influences, the proportion of households receiving Supplemental Nutrition Assistance Program (SNAP) benefits was calculated and mapped at the county level. Strikingly, the spatial distribution of SNAP participation closely mirrored the two curved patterns observed in AD prevalence.
 
@@ -1143,7 +951,7 @@ map_snap <- us_counties %>%
 
 #  SNAP % map
 
-p_map <- ggplot(map_snap, aes(long, lat, group = group)) +
+pe1 <- ggplot(map_snap, aes(long, lat, group = group)) +
   geom_polygon(aes(fill = pct_snap), color = NA) +
   
   scale_fill_gradient(
@@ -1160,17 +968,25 @@ p_map <- ggplot(map_snap, aes(long, lat, group = group)) +
   coord_fixed(1.3) +
   labs(title = "Figure 8: County-level % of Households Receiving SNAP (2016-2020)") +
   theme_void() +
-  theme(legend.position = "right")
+  theme(legend.position = "right") +
+  theme(plot.title = element_text(face = "bold"))
   #theme(
    # plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
   #  legend.title = element_text(size = 10),
    # legend.text = element_text(size = 8)
   #)
-p_map
+
+pe1
+p0
 ```
 
+This figure shows a positive association between the percentage of households receiving SNAP benefits and Alzheimer’s dementia (AD) prevalence at the county level. Counties with higher SNAP participation tend to have higher AD prevalence, as indicated by the upward regression line and a moderate correlation (r = 0.305). Although there is substantial variability, the overall trend suggests a relationship between socioeconomic disadvantage and AD burden.
+
+However, this study is based on an ecological design using group-level data, so the results must be interpreted with caution. The observed association does not imply causation and may reflect underlying confounding factors. Importantly, this pattern cannot be translated to individual risk (ecological fallacy).
+
+In summary, the findings suggest a potential link between poverty and AD prevalence at the population level, supporting further investigation with more detailed individual-level data.
+
 ```{r, echo=FALSE}
-library(dplyr)
 
 # Prepare data
 scatter_data <- snap_clean %>%
@@ -1224,9 +1040,10 @@ p <- ggplot(scatter_data,
   labs(
     x = "% SNAP Households",
     y = "AD Prevalence (%)",
-    title = "% SNAP Households vs Alzheimer's Prevalence"
+    title = "Figure 9: Association bwtween % SNAP Households vs AD Prevalence"
   ) +
-  theme_minimal()
+  theme_minimal()+
+  theme(plot.title = element_text(face = "bold"))
 
 # Convert to interactive + annotation
 ggplotly(p, tooltip = "text") %>%

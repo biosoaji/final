@@ -3,3 +3,6 @@
 .RData
 *.Rhistory
 .Rproj.user
+
+/.quarto/
+**/*.quarto_ipynb
