@@ -4,13 +4,13 @@ title: An Ecological Study of Prevalence of Alzheimer’s Dementia and Its Poten
 
 ## Conclusion
 
-This ecological study identified a positive association between Alzheimer’s dementia prevalence and socioeconomic disadvantage, as measured by the proportion of households receiving SNAP benefits. While causal inference is limited due to the aggregated nature of the data, the strong visual correspondence between geographic patterns and the moderate statistical association support this relationship.
+No common risk factors were identified among the four states with high Alzheimer’s dementia prevalence in the state-level analysis. This may reflect an artifact introduced by aggregating county-level data to the state level, which can obscure within-state variability.
+
+This ecological study was designed to discover potential risk factors related to Alzheimer's dementia prevalence. This study identified a positive relationship between Alzheimer’s dementia prevalence and socioeconomic disadvantage, as measured by the proportion of households receiving SNAP benefits in the county-level analysis. While causal inference is limited due to the aggregated nature of the data, the strong visual correspondence between geographic patterns and the moderate statistical association support this relationship.
 
 Previous studies have reported links between socioeconomic status and dementia risk. For example, Powell et al. (2020) found that individuals residing in the most disadvantaged neighborhoods had significantly higher odds of Alzheimer’s neuropathology. Although that study was limited to two states, the present findings suggest that similar patterns may extend at the national level.
 
 These results highlight the importance of considering broader social and environmental contexts in understanding Alzheimer’s disease risk and emphasize the need for equitable socioeconomic conditions to promote cognitive health.
-
-
 
 
 ## Summary
@@ -21,7 +21,7 @@ In contrast, socioeconomic indicators—particularly SNAP participation—demons
 
 
 
-## Further Discussion
+## Further Study
 
 ### Elevation Effect
 
@@ -37,5 +37,25 @@ In summary, future studies integrating socioeconomic, geographic and biological 
 ![](elevationUSmap.jpeg)
 
 (Left) US map with average elevation by state, [Source: wikipedia](https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_elevation)\
-
 (Right) US topographic map, [Source: wikipedia](https://simple.wikipedia.org/wiki/List_of_U.S._states_by_elevation)
+
+
+## After Presentation Discussion
+
+During the class discussion, we observed that the prevalence of Type 2 Diabetes also exhibited the region-specific patterns from Alzheimer's dementia prevalence at the national level. Given that similar geographic patterns have been reported across multiple diseases, these findings suggest that such regional variation may reflect broader differences in healthcare access and overall system performance, rather than disease-specific factors alone.
+
+Accordingly, further research should prioritize identifying underlying issues within the healthcare system and the socioeconomic environment in regions where these patterns are observed.  
+
+## Reference
+
+Ahmad, F.B., Anderson, R.N., 2021. The Leading Causes of Death in the US for 2020. JAMA 325, 1829–1830. https://doi.org/10.1001/jama.2021.5469
+
+Dhana, K., Beck, T., Desai, P., Wilson, R.S., Evans, D.A., Rajan, K.B., 2023. Prevalence of Alzheimer’s disease dementia in the 50 US states and 3142 counties: A population estimate using the 2020 bridged-race postcensal from the National Center for Health Statistics. Alzheimer’s & Dementia 19, 4388–4395. https://doi.org/10.1002/alz.13081
+
+Liu, T., Hou, K., Li, J., Han, T., Liu, S., Wei, J., 2024. Alzheimer’s Disease and Aging Association: Identification and Validation of Related Genes. J Prev Alzheimers Dis 11, 196–213. https://doi.org/10.14283/jpad.2023.101
+
+Powell, W.R., Buckingham, W.R., Larson, J.L., Vilen, L., Yu, M., Salamat, M.S., Bendlin, B.B., Rissman, R.A., Kind, A.J.H., 2020. Association of Neighborhood-Level Disadvantage With Alzheimer Disease Neuropathology. JAMA Netw Open 3, e207559. https://doi.org/10.1001/jamanetworkopen.2020.7559
+
+Thielke, S., Slatore, C.G., Banks, W.A., 2015. Association Between Alzheimer Dementia Mortality Rate and Altitude in California Counties. JAMA Psychiatry 72, 1253–1254. https://doi.org/10.1001/jamapsychiatry.2015.1852
+
+

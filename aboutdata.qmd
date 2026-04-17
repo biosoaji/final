@@ -17,6 +17,7 @@ Two episodic memory tests, one perceptual speed test, and the Mini-Mental State 
 
   - **Demographic data:**  
 Based on NHCS 2020 bridged-race population estimates.
+    - **Population 65 Years and Over** - The column named`"No. of people age 65y and older, in thousands"` in this dataset was used to assess demographic effect.  
 
 - **Raw data acquisition:**  
 The dataset was obtained by downloading the supplementary CSV file (NIHMS1888597-supplement-supinfo3.csv).
@@ -107,9 +108,10 @@ write_csv(cdc_data, "cdc_dataset.csv")
 
 -   **Datasets used:**
 
+
     -   Total population (Decennial Census 2020): DECENNIALDHC2020.P1
 
-    -   Population 65 Years and Over (ACS 5-year estimates 2016-2020): ACSST5Y2020.S0103
+    -   Population 65 Years and Over (ACS 5-year estimates 2016-2020): ACSST5Y2020.S0103 - *Dropped due to low coverage.
 
     -   SNAP (Food Stamps) participation (ACS 5-year estimates 2016-2020): ACSST5Y2020.S2201
 
@@ -119,31 +121,109 @@ write_csv(cdc_data, "cdc_dataset.csv")
 -   **Data cleaning:** Raw Census datasets with multi-row headers and complex column structures were standardized by restructuring column names, selecting relevant variables, and converting population counts to numeric format. Geographic identifiers were harmonized by splitting county and state fields and standardizing text formatting, enabling integration with prevalence and survey datasets. Other datasets from U.S. Census Bureau were processed with the same procedure.
 
 ```{r, eval=FALSE, echo=TRUE, message=FALSE, warning=FALSE}
+# Load SNAP data
+snap_raw <- read_csv("SNAP.csv", show_col_types = FALSE)
 
-# DATA CLEANING: Senior Population & Percentages
-pop_raw <- read_csv("seniorpop5Y2020.csv", show_col_types = FALSE)
+# DATA CLEANING: 
 
-pop_clean <- pop_raw %>%
-  slice(-1) %>%                      # Clean multi-row headers
-  select(
-    location = NAME,                 # selecting relevant variables
-    total_pop = S0103_C01_001E,
-    senior_pop = S0103_C02_001E
+snap <- snap_raw[-1, ]                      # Clean multi-row headers
+
+snap_clean <- snap %>%
+  select(NAME, S2201_C01_001E, S2201_C03_001E) %>%
+  rename(
+    location = NAME,
+    total_hh = S2201_C01_001E,              # selecting relevant variables
+    snap_hh  = S2201_C03_001E
   ) %>%
   mutate(
-    total_pop = as.numeric(total_pop),# converting population counts to numeric format
-    senior_pop = as.numeric(senior_pop),
-    pct_senior = (senior_pop / total_pop) * 100,
-    location = str_trim(location)
+    total_hh = as.numeric(total_hh),        # converting population counts to numeric format
+    snap_hh  = as.numeric(snap_hh)
   ) %>%
-  drop_na(total_pop, senior_pop) %>%
   separate(location, into = c("county", "state"), sep = ", ") %>% #splitting county and state fields
   mutate(
-    county = str_remove(county, " County| Parish| Borough| Census Area| Municipality"), #text formatting
-    county_lower = tolower(county), # for integration
-    state_lower = tolower(state)
+    county = str_remove(county, " County"),
+    county_lower = tolower(county),         # for integration
+    state_lower  = tolower(state),
+    pct_snap = (snap_hh / total_hh) * 100
   ) %>%
-  filter(state_lower != "district of columbia")        
+  select(county_lower, state_lower, pct_snap)
+
+
+# Map data merge
+
+us_counties <- map_data("county")
+
+map_snap <- us_counties %>%
+  left_join(snap_clean,
+            by = c("subregion" = "county_lower",
+                   "region" = "state_lower"))
+
+```
+
+*Dropped dataset
+- Population 65 Years and Over (ACS 5-year Estimates, 2016–2020): ACSST5Y2020.S0103
+
+- This dataset was excluded due to a high proportion of missing values (62%; see Figure D1). 
+
+- Attempts to use alternative one-year estimate datasets (2019 and 2023) yielded similarly high levels of missingness (data not shown).
+
+```{r, message=FALSE, warning=FALSE}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(knitr)
+library(kableExtra)
+pop_raw <- read_csv("seniorpop5Y2020.csv", show_col_types = FALSE)
+
+# Prepare Data
+missingness_check <- pop_raw %>%
+  slice(-1) %>%
+  select(
+    `Total Population` = S0103_C01_001E,
+    `Senior Population (65+)` = S0103_C02_001E
+  ) %>%
+  mutate(across(everything(), ~na_if(., "*****"))) %>%
+  mutate(across(everything(), as.numeric))
+
+# Total number of observations
+n_obs <- nrow(missingness_check)
+
+# Calculate Missingness
+na_summary_pop <- missingness_check %>%
+  summarise(across(everything(), list(
+    count = ~sum(is.na(.)),
+    pct = ~round(mean(is.na(.)) * 100, 2)
+  ))) %>%
+  
+  pivot_longer(
+    everything(),
+    names_to = c("Variable Name", ".value"),
+    names_pattern = "(.*)_(count|pct)"
+  ) %>%
+  
+  rename(`NA Count` = count, `Missing (%)` = pct) %>%
+  
+  # Add total observations
+  mutate(`Total N` = n_obs) %>%
+  
+  mutate(Status = case_when(
+    `Missing (%)` == 0 ~ "Complete",
+    `Missing (%)` < 5 ~ "High Integrity",
+    `Missing (%)` < 20 ~ "Conditional",
+    TRUE ~ "Limited Usage"
+  )) %>%
+  
+  select(`Variable Name`, `Total N`, `NA Count`, `Missing (%)`, Status)
+
+# 3. Render Table
+na_summary_pop %>%
+  kbl(caption = "Table D1: Completeness Summary for the dropped 65+ yr Census Population dataset (2020)") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#f2f2f2") %>%
+  column_spec(4, bold = TRUE)
 ```
 
 ### (4) Geographic Data (U.S. Department of Transportation National Transportation Atlas Database (NTAD))
@@ -194,3 +274,8 @@ ntad_clean <- ntad_raw %>%
   ) %>%
   select(geoid, area_m2)
 ```
+
+### (5) Miscellaneous Notes
+- COVID-19 data were obtained from BIOS 620 Lab 4 materials (originally sourced from the Centers for Disease Control and Prevention (CDC)).\
+- County-level altitude data for the United States were not available.
+

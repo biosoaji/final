@@ -145,7 +145,7 @@ question_map <- scd_data %>%
   select(questionid, summary, topic, question) # Reordering columns for clarity
 
 question_map %>%
-  kbl(caption = "Table 3: Mapping of Question ID to Topic and Survey Question",
+  kbl(caption = "Table 3: Mapping of Question ID to Topic and Survey Question in Cognitive Decline Module",
       col.names = c("Question ID", "Summary", "Topic", "Survey Question")) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = T) %>%
   column_spec(1, width = "100px") %>%
@@ -272,7 +272,7 @@ na_summary_table %>%
 
 ### 2.1. SCD Comparison of High AD Prevalence States to the U.S. National Level (2015–2022)
 
-To assess whether states with the highest Alzheimer’s dementia (AD) prevalence—Maryland (12.9%), New York (12.7%), Mississippi (12.5%), and Florida (12.5%)—share similar patterns in subjective cognitive decline (SCD), response frequencies from the Cognitive Decline module were analyzed. Stratification by gender and race/ethnicity was excluded, and only aggregated state-level data from 2015 to 2022 were used.
+To assess whether states with the highest Alzheimer’s dementia (AD) prevalence, Maryland (12.9%), New York (12.7%), Mississippi (12.5%), and Florida (12.5%), share similar patterns in subjective cognitive decline (SCD), response frequencies from the Cognitive Decline module were analyzed. Stratification by gender and race/ethnicity was excluded, and only aggregated state-level data from 2015 to 2022 were used.
 
 In the jitter plot (Figure 2), these four states were highlighted against the distribution of all states (gray), with the U.S. national aggregate shown in black as a reference. Maryland consistently exhibited lower SCD-related response frequencies than the national average, whereas Mississippi showed higher values across multiple indicators. This suggests that older adults in Mississippi may report greater awareness of cognitive decline and a higher need for assistance, aligning with its elevated AD prevalence. In contrast, Maryland demonstrated an inverse pattern, with lower SCD reporting despite high AD prevalence. Florida and New York showed values similar to the national distribution, indicating no distinct deviation in SCD-related measures.
 
@@ -977,10 +977,10 @@ pe1 <- ggplot(map_snap, aes(long, lat, group = group)) +
   #)
 
 pe1
-p0
+
 ```
 
-This figure shows a positive association between the percentage of households receiving SNAP benefits and Alzheimer’s dementia (AD) prevalence at the county level. Counties with higher SNAP participation tend to have higher AD prevalence, as indicated by the upward regression line and a moderate correlation (r = 0.305). Although there is substantial variability, the overall trend suggests a relationship between socioeconomic disadvantage and AD burden.
+This figure shows a positive association between the percentage of households receiving SNAP benefits and Alzheimer’s dementia (AD) prevalence at the county level. Counties with higher SNAP participation tend to have higher AD prevalence, as indicated by the upward regression line and a moderate correlation ($r^2$ = 0.305). Although there is substantial variability, the overall trend suggests a relationship between socioeconomic disadvantage and AD burden.
 
 However, this study is based on an ecological design using group-level data, so the results must be interpreted with caution. The observed association does not imply causation and may reflect underlying confounding factors. Importantly, this pattern cannot be translated to individual risk (ecological fallacy).
 
@@ -1040,7 +1040,7 @@ p <- ggplot(scatter_data,
   labs(
     x = "% SNAP Households",
     y = "AD Prevalence (%)",
-    title = "Figure 9: Association bwtween % SNAP Households vs AD Prevalence"
+    title = "Figure 9: Association between % SNAP Households vs AD Prevalence"
   ) +
   theme_minimal()+
   theme(plot.title = element_text(face = "bold"))
@@ -1051,7 +1051,7 @@ ggplotly(p, tooltip = "text") %>%
     annotations = list(
       x = max(scatter_data$pct_snap),
       y = max(scatter_data$prevalence),
-      text = paste0("r = ", round(cor_val, 3)),
+      text = paste0("R^2 = ", round(cor_val, 3)),
       showarrow = FALSE,
       xanchor = "right",
       yanchor = "top"
